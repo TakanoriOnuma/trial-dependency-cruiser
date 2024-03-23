@@ -6,9 +6,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "preinstall": "npx only-allow npm",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview:": "vite preview",
+    "storybook": "storybook dev -p 7020",
+    "storybook:build": "storybook build",
     "deps:lint": "depcruise src",
     "deps:graph": "depcruise src --include-only '^src' --output-type dot | dot -T svg > ./reports/dependency-graph.svg",
     "deps:mermaid": "depcruise src -x '^node_modules' -T mermaid -f ./reports/dependency-graph.mmd"
@@ -20,11 +23,15 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^8.0.4",
+    "@storybook/react": "^8.0.4",
+    "@storybook/react-vite": "^8.0.4",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
     "dependency-cruiser": "^16.2.4",
     "prettier": "^3.2.5",
+    "storybook": "^8.0.4",
     "typescript": "^5.4.3",
     "vite": "^5.2.2",
     "vite-tsconfig-paths": "^4.3.2"
