@@ -14,9 +14,9 @@
     "storybook": "storybook dev -p 7020",
     "storybook:build": "storybook build",
     "deps:lint": "depcruise src",
-    "deps:graph": "depcruise src --include-only '^src' --output-type dot | dot -T svg > ./reports/dependency-graph.svg",
-    "deps:graph-html": "depcruise src --include-only '^src' --output-type dot | dot -T svg | depcruise-wrap-stream-in-html > ./reports/dependency-graph.html",
-    "deps:mermaid": "depcruise src -x '^node_modules' -T mermaid -f ./reports/dependency-graph.mmd",
+    "deps:graph": "depcruise src --include-only '^src' --output-type dot | dot -T svg > ./docs/dependency-graph.svg",
+    "deps:graph-html": "depcruise src --include-only '^src' --output-type dot | dot -T svg | depcruise-wrap-stream-in-html > ./docs/dependency-graph.html",
+    "deps:mermaid": "depcruise src -x '^node_modules' -T mermaid -f ./docs/dependency-graph.mmd",
     "deps:text": "depcruise src -x '^node_modules' -T text"
   },
   "author": "",
