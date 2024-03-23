@@ -8,7 +8,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview:": "vite preview"
+    "preview:": "vite preview",
+    "deps:lint": "depcruise src",
+    "deps:graph": "depcruise src --include-only '^src' --output-type dot | dot -T svg > dependency-graph.svg",
+    "deps:mermaid": "depcruise src -x '^node_modules' -T mermaid -f dependency-graph.mmd"
   },
   "author": "",
   "license": "MIT",
@@ -20,6 +23,7 @@
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
+    "dependency-cruiser": "^16.2.4",
     "prettier": "^3.2.5",
     "typescript": "^5.4.3",
     "vite": "^5.2.2"
