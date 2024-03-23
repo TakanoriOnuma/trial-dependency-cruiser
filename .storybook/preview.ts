@@ -2,7 +2,8 @@ import { Preview } from '@storybook/react';
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    // 非推奨になるっぽい
+    // actions: { argTypesRegex: '^on[A-Z].*' },
   },
 };
 

@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LocalCounter > Base 1`] = `
+<div>
+  <div
+    style="display: flex;"
+  >
+    <button>
+      -
+    </button>
+    <span
+      style="padding: 0px 5px;"
+    >
+      0
+    </span>
+    <button>
+      +
+    </button>
+  </div>
+</div>
+`;
+
+exports[`LocalCounter > InitialCount 1`] = `
+<div>
+  <div
+    style="display: flex;"
+  >
+    <button>
+      -
+    </button>
+    <span
+      style="padding: 0px 5px;"
+    >
+      10
+    </span>
+    <button>
+      +
+    </button>
+  </div>
+</div>
+`;
+
+exports[`LocalCounter > Play 1`] = `
+<div>
+  <div
+    style="display: flex;"
+  >
+    <button>
+      -
+    </button>
+    <span
+      style="padding: 0px 5px;"
+    >
+      3
+    </span>
+    <button>
+      +
+    </button>
+  </div>
+</div>
+`;

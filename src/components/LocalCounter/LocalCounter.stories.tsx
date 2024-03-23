@@ -1,4 +1,5 @@
 import { StoryObj, Meta } from '@storybook/react';
+import { within, userEvent } from '@storybook/test';
 
 import { LocalCounter } from './LocalCounter';
 
@@ -12,6 +13,15 @@ const meta: Meta<typeof LocalCounter> = {
 export default meta;
 
 export const Base: Story = {};
+
+export const Play: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: '+' }));
+    await userEvent.click(canvas.getByRole('button', { name: '+' }));
+    await userEvent.click(canvas.getByRole('button', { name: '+' }));
+  },
+};
 
 export const InitialCount: Story = {
   args: {
