@@ -1,3 +1,4 @@
+//
 import { FC } from 'react';
 
 import { Counter, useCounter } from '../Counter';
