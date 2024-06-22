@@ -32,5 +32,5 @@ jobs:
 
       - name: Diff Files 2
         run: |
-          BASE_SHA=$(git rev-parse ${{ github.base_ref }})
+          BASE_SHA=$(git rev-parse origin/${{ github.base_ref }})
           git diff --name-only $BASE_SHA...${{ github.sha }}
