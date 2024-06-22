@@ -43,6 +43,8 @@ jobs:
       - name: Diff Files > sha back to commits - sha
         run: |
           echo HEAD_SHA: $(git rev-parse HEAD)
+          echo HEAD^1: $(git rev-parse HEAD^1)
+          echo HEAD^2: $(git rev-parse HEAD^2)
           BASE_SHA=$(git rev-parse HEAD~${{ github.event.pull_request.commits }})
           echo BASE_SHA: $BASE_SHA
           git diff --name-only $BASE_SHA...${{ github.sha }}
