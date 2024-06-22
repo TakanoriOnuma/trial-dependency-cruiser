@@ -26,8 +26,6 @@ runs:
       run: |
         echo "$(git diff --name-only $BASE_SHA...$HEAD_SHA)" >> ${{ inputs.output-file }}
         cat ${{ inputs.output-file }}
-        # わざと失敗してみる
-        hoge
       env:
         BASE_REF: ${{ github.event.pull_request.base.ref }}
         BASE_SHA: ${{ github.event.pull_request.base.sha }}
