@@ -28,7 +28,7 @@ jobs:
         # 失敗しても続けてくれる
         continue-on-error: true
 
-      - name: Show Diff Files Is Exists
+      - name: Show Diff Files If Exists
         run: |
           if [ -f ./diff_files.txt ]; then
             cat ./diff_files.txt
