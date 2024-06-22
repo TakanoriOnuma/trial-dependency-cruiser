@@ -10,5 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: |
-          echo "Files changed in this PR: ${{ github.event.pull_request.changed_files }}"
+      - name: Dump GitHub Contexts
+        run: |
+          echo '${{ github.event_name }}'
+          echo '${{ toJSON(github.event.pull_request )}}'
+        env:
+          base: ${{ github.event.pull_request.base }}
+          head: ${{ github.event.pull_request.head }}
+          changed_files: ${{ github.event.pull_request.changed_files }}
