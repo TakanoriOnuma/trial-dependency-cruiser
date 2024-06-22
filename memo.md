@@ -6,7 +6,7 @@
 $ npx depcruise src/components/LocalCounter/LocalCounter.tsx -x 'node_modules' -T text
 
 # 対象ファイルにたどり着くファイルを算出する
-$ npx depcruise src --reaches "LocalCounter.tsx" -x 'node_modules' -T text
+$ npx depcruise src --reaches "LocalCounter.tsx" -T text
 ```
 
 ```sh

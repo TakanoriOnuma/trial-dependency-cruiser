@@ -12,6 +12,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+
       - name: Diff Files On Pull Request
         id: diff-files-on-pr
         uses: ./.github/actions/diff-files-on-pr
@@ -24,6 +29,14 @@ jobs:
         run: |
           if [ -f ./diff_files.txt ]; then
             cat ./diff_files.txt
+          else
+            echo "diff_files.txt is not exists."
+          fi
+
+      - name: Dependent Diff Files
+        run: |
+          if [ -f ./diff_files.txt ]; then
+            npx depcruise src $(cat ./diff_files.txt | sed 's/^/--reaches /') -T text
           else
             echo "diff_files.txt is not exists."
           fi
