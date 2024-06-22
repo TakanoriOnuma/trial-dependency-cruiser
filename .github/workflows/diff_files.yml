@@ -16,6 +16,13 @@ jobs:
         uses: ./.github/actions/get-diff-files-in-pr
         with:
           output-file: './diff_files.txt'
+        # 失敗しても続けてくれる
+        continue-on-error: true
 
-      - name: Show Diff Files
-        run: cat ./diff_files.txt
+      - name: Show Diff Files Is Exists
+        run: |
+          if [ -f ./diff_files.txt ]; then
+            cat ./diff_files.txt
+          else
+            echo "diff_files.txt is not exists."
+          fi
