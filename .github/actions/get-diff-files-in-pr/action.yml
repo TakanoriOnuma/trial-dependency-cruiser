@@ -1,11 +1,6 @@
 name: Get Diff Files In Pull Request
 description: PR内の差分ファイルを出力する
 
-outputs:
-  diff-files:
-    description: PR内の差分ファイル一覧
-    value: ${{ steps.get-diff-files.outputs.diff-files }}
-
 runs:
   using: composite
   steps:
@@ -22,10 +17,9 @@ runs:
       shell: bash
 
     - name: Diff Files > pull_request.base.sha - pull_request.head.sha
-      id: get-diff-files
       run: |
         DIFF_FILES=$(git diff --name-only $BASE_SHA...$HEAD_SHA)
-        echo "diff-files=$DIFF_FILES" >> $GITHUB_OUTPUT
+        echo $DIFF_FILES
       env:
         BASE_REF: ${{ github.event.pull_request.base.ref }}
         BASE_SHA: ${{ github.event.pull_request.base.sha }}
