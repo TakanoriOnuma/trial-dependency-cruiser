@@ -17,6 +17,9 @@ jobs:
           node-version-file: 'package.json'
           cache: 'npm'
 
+      - name: Install
+        run: npm ci
+
       - name: Diff Files On Pull Request
         id: diff-files-on-pr
         uses: ./.github/actions/diff-files-on-pr
