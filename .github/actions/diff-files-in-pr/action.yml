@@ -1,4 +1,4 @@
-name: Get Diff Files In Pull Request
+name: Diff Files In Pull Request
 description: PR内の差分ファイルを出力する
 
 inputs:

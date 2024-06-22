@@ -12,8 +12,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get Diff Files In Pull Request
-        uses: ./.github/actions/get-diff-files-in-pr
+      - name: Diff Files In Pull Request
+        uses: ./.github/actions/diff-files-in-pr
         with:
           output-file: './diff_files.txt'
         # 失敗しても続けてくれる
