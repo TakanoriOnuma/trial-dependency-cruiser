@@ -21,6 +21,9 @@ jobs:
           head_ref: ${{ github.event.pull_request.head.ref }}
           changed_files: ${{ github.event.pull_request.changed_files }}
 
+      - name: Git Log
+        run: git log --oneline
+
       - name: Diff Files > pull_request.base.sha - pull_request.head.sha
         run: |
           git diff --name-only $BASE_SHA...$HEAD_SHA
@@ -34,7 +37,7 @@ jobs:
       - name: Diff Files > origin/base_ref - sha
         run: |
           BASE_SHA=$(git rev-parse origin/${{ github.base_ref }})
-          echo $BASE_SHA
+          echo BASE_SHA: $BASE_SHA
           git diff --name-only $BASE_SHA...${{ github.sha }}
 
       - name: Diff Files > sha back to commits - sha
