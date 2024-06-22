@@ -23,7 +23,7 @@ jobs:
 
       - name: Diff Files
         run: |
-          git diff --name-only $HEAD_SHA...$BASE_SHA
+          git diff --name-only $BASE_SHA...$HEAD_SHA
         env:
           BASE_REF: ${{ github.event.pull_request.base.ref }}
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -32,4 +32,5 @@ jobs:
 
       - name: Diff Files 2
         run: |
-          git diff --name-only ${{ github.base_ref }}...${{ github.sha }}
+          BASE_SHA=$(git rev-parse ${{ github.base_ref }})
+          git diff --name-only $BASE_SHA...${{ github.sha }}
