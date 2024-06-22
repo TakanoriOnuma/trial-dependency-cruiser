@@ -43,7 +43,7 @@ jobs:
             echo ------
             echo $(cat ./diff_files.txt | sed 's/^/--reaches /')
             echo ------
-            npx depcruise src $(cat ./diff_files.txt | sed 's/^/--reaches /') -T text
+            npx depcruise src --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T text
           else
             echo "diff_files.txt is not exists."
           fi
