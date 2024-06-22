@@ -39,9 +39,11 @@ jobs:
       - name: Dependent Diff Files
         run: |
           if [ -f ./diff_files.txt ]; then
-            echo $(cat ./diff_files.txt | sed 's/^/--reaches ^/')
+            npx depcruise src --reaches LocalCounter.tsx --reaches useCounter.ts -T text
             echo ------
-            npx depcruise src $(cat ./diff_files.txt | sed 's/^/--reaches ^/') -T text
+            echo $(cat ./diff_files.txt | sed 's/^/--reaches /')
+            echo ------
+            npx depcruise src $(cat ./diff_files.txt | sed 's/^/--reaches /') -T text
           else
             echo "diff_files.txt is not exists."
           fi
