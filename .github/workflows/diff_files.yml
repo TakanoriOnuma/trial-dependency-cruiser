@@ -12,8 +12,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: ./.github/actions/get-diff-files-in-pr
-        id: get-diff-files
+      - name: Get Diff Files In Pull Request
+        uses: ./.github/actions/get-diff-files-in-pr
+        with:
+          output-file: './diff_files.txt'
+
+      - name: Show Diff Files
+        run: cat ./diff_files.txt
 
       - name: Dump GitHub Contexts
         run: |

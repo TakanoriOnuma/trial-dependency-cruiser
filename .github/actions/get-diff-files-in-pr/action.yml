@@ -1,13 +1,19 @@
 name: Get Diff Files In Pull Request
 description: PR内の差分ファイルを出力する
 
+inputs:
+  output-file:
+    description: 差分ファイル一覧の出力先
+    required: true
+    default: './diff_files.txt'
+
 runs:
   using: composite
   steps:
     # デバッグ用の出力
     - name: Dump Github Contexts
       run: |
-        echo '${{ github.env_name }}'
+        echo '${{ github.event_name }}'
         echo '${{ toJSON(github.event.pull_request) }}'
       shell: bash
 
@@ -18,8 +24,8 @@ runs:
 
     - name: Diff Files > pull_request.base.sha - pull_request.head.sha
       run: |
-        DIFF_FILES=$(git diff --name-only $BASE_SHA...$HEAD_SHA)
-        echo $DIFF_FILES
+        echo $(git diff --name-only $BASE_SHA...$HEAD_SHA) >> ${{ inputs.output-file }}
+        cat ${{ inputs.output-file }}
       env:
         BASE_REF: ${{ github.event.pull_request.base.ref }}
         BASE_SHA: ${{ github.event.pull_request.base.sha }}
