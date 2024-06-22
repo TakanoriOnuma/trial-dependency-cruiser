@@ -1,4 +1,4 @@
-name: Diff Files In Pull Request
+name: Diff Files On Pull Request
 description: PR内の差分ファイルを出力する
 
 inputs:
@@ -11,7 +11,7 @@ runs:
   using: composite
   steps:
     # デバッグ用の出力
-    - name: Dump Github Contexts
+    - name: Dump GitHub Contexts
       run: |
         echo '${{ github.event_name }}'
         echo '${{ toJSON(github.event.pull_request) }}'
@@ -24,6 +24,7 @@ runs:
 
     - name: Diff Files > pull_request.base.sha - pull_request.head.sha
       run: |
+        hoge
         echo "$(git diff --name-only $BASE_SHA...$HEAD_SHA)" >> ${{ inputs.output-file }}
         cat ${{ inputs.output-file }}
       env:

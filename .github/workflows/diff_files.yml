@@ -12,8 +12,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Diff Files In Pull Request
-        uses: ./.github/actions/diff-files-in-pr
+      - name: Diff Files On Pull Request
+        id: diff-files-on-pr
+        uses: ./.github/actions/diff-files-on-pr
         with:
           output-file: './diff_files.txt'
         # 失敗しても続けてくれる
@@ -26,3 +27,5 @@ jobs:
           else
             echo "diff_files.txt is not exists."
           fi
+        env:
+          error: ${{ steps.diff-files-on-pr.outputs.error }}
