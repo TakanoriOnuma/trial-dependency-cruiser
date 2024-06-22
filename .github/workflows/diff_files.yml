@@ -21,7 +21,7 @@ jobs:
           head_ref: ${{ github.event.pull_request.head.ref }}
           changed_files: ${{ github.event.pull_request.changed_files }}
 
-      - name: Diff Files
+      - name: Diff Files > pull_request.base.sha - pull_request.head.sha
         run: |
           git diff --name-only $BASE_SHA...$HEAD_SHA
         env:
@@ -29,8 +29,14 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          commits: ${{ github.event.pull_request.commits }}
 
-      - name: Diff Files 2
+      - name: Diff Files > origin/base_ref - sha
         run: |
           BASE_SHA=$(git rev-parse origin/${{ github.base_ref }})
+          echo $BASE_SHA
           git diff --name-only $BASE_SHA...${{ github.sha }}
+
+      - name: Diff Files > sha back to commits - sha
+        run: |
+          git diff --name-only ${{ github.sha }}~${{ github.event.pull_request.commits }}...${{ github.sha }}
