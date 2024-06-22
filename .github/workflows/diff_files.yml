@@ -1,0 +1,29 @@
+name: Diff Files
+
+on:
+  pull_request:
+
+jobs:
+  diff_files:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Diff Files On Pull Request
+        id: diff-files-on-pr
+        uses: ./.github/actions/diff-files-on-pr
+        with:
+          output-file: './diff_files.txt'
+        # 失敗しても続けてくれる
+        continue-on-error: true
+
+      - name: Show Diff Files Is Exists
+        run: |
+          if [ -f ./diff_files.txt ]; then
+            cat ./diff_files.txt
+          else
+            echo "diff_files.txt is not exists."
+          fi
