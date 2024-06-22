@@ -12,7 +12,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: ./.github/actions/diff-files-in-pr
+      - uses: ./.github/actions/get-diff-files-in-pr
         id: get-diff-files
 
       - name: Dump GitHub Contexts
