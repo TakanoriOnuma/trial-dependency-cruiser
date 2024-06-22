@@ -13,8 +13,8 @@ jobs:
       - name: Dump GitHub Contexts
         run: |
           echo '${{ github.event_name }}'
-          echo '${{ toJSON(github.event.pull_request )}}'
+          echo '${{ toJSON(github.event.pull_request ) }}'
         env:
-          base: ${{ github.event.pull_request.base }}
-          head: ${{ github.event.pull_request.head }}
-          changed_files: ${{ github.event.pull_request.changed_files }}
+          debug_base: ${{ github.event.pull_request.base }}
+          debug_head: ${{ github.event.pull_request.head }}
+          debug_changed_files: ${{ github.event.pull_request.changed_files }}
