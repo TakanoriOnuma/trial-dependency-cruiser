@@ -17,5 +17,5 @@ $ echo $(ls | sed 's/^/--reaches /')
 
 # 全てに--reachesをつける場合はAND条件になっていそうな雰囲気だったので、正規表現でOR条件で渡してみる
 # xargsでスペース結合の一行文字列に変換し、スペースを|に置き換える
-$ echo $(ls | xargs | sed 's/ /|/g)
+$ echo $(ls | xargs | sed 's/ /|/g')
 ```
