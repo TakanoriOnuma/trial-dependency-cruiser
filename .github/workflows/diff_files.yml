@@ -27,5 +27,3 @@ jobs:
           else
             echo "diff_files.txt is not exists."
           fi
-        env:
-          error: ${{ steps.diff-files-on-pr.outputs.error }}
