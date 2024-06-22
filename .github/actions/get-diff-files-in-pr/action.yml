@@ -1,0 +1,53 @@
+name: Get Diff Files In Pull Request
+description: PR内の差分ファイルを出力する
+
+outputs:
+  diff-files:
+    description: PR内の差分ファイル一覧
+    value: ${{ steps.get-diff-files.outputs.diff-files }}
+
+runs:
+  using: composite
+  steps:
+    # デバッグ用の出力
+    - name: Dump Github Contexts
+      run: |
+        echo '${{ github.env_name }}'
+        echo '${{ toJSON(github.event.pull_request) }}'
+      shell: bash
+
+    # デバッグ用の出力
+    - name: Git Log
+      run: git log --oneline
+      shell: bash
+
+    - name: Diff Files > pull_request.base.sha - pull_request.head.sha
+      id: get-diff-files
+      run: |
+        DIFF_FILES=$(git diff --name-only $BASE_SHA...$HEAD_SHA)
+        echo "diff-files=$DIFF_FILES" >> $GITHUB_OUTPUT
+      env:
+        BASE_REF: ${{ github.event.pull_request.base.ref }}
+        BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        commits: ${{ github.event.pull_request.commits }}
+      shell: bash
+
+    - name: Diff Files > origin/base_ref - sha
+      run: |
+        BASE_SHA=$(git rev-parse origin/${{ github.base_ref }})
+        echo BASE_SHA: $BASE_SHA
+        git diff --name-only $BASE_SHA...${{ github.sha }}
+      shell: bash
+
+    - name: Diff Files > sha back to commits - sha
+      run: |
+        echo HEAD_SHA: $(git rev-parse HEAD)
+        # マージ前のコミットを取得
+        BEFORE_MERGE_SHA=$(git rev-parse HEAD^2)
+        echo BEFORE_MERGE_SHA: $BEFORE_MERGE_SHA
+        BASE_SHA=$(git rev-parse $BEFORE_MERGE_SHA~${{ github.event.pull_request.commits }})
+        echo BASE_SHA: $BASE_SHA
+        git diff --name-only $BASE_SHA...${{ github.sha }}
+      shell: bash
