@@ -1,0 +1,14 @@
+name: Diff Files
+
+on:
+  pull_request:
+
+jobs:
+  diff_files:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: |
+          echo "Files changed in this PR: ${{ github.event.pull_request.changed_files }}"
