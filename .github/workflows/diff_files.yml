@@ -87,8 +87,3 @@ jobs:
             );
         env:
           REPORT_FILE: ./dependent-files-with-diff-files.md
-
-      - name: Comment Test
-        uses: TakanoriOnuma/actions-comment-on-pr@main
-        with:
-          message-file-path: ./dependent-files-with-diff-files.md
