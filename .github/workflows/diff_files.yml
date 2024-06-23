@@ -53,7 +53,7 @@ jobs:
           if [ -f ./diff_files.txt ]; then
             DEPENDENT_RESULT=$(npx depcruise docs --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T mermaid)
             echo $DEPENDENT_RESULT
-            TRIMMED_RESULT=$(echo $DEPENDENT_RESULT)
+            TRIMMED_RESULT=$(echo $DEPENDENT_RESULT | sed 's/flowchart LR//')
             echo $TRIMMED_RESULT
             if [ -z $TRIMMED_RESULT ]; then
               echo "変更ファイルに依存しているJaveScriptファイルはありません。" >> $REPORT_FILE
