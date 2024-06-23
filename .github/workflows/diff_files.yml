@@ -71,19 +71,8 @@ jobs:
         env:
           REPORT_FILE: ./dependent-files-with-diff-files.md
 
-      - name: Comment Dependent Diff Files
-        uses: actions/github-script@v5
+      - name: Comment Dependent DiffFiles
+        uses: TakanoriOnuma/actions-comment-on-pr@v0.0.0
         with:
-          script: |
-            const fs = require('fs');
-            const report = fs.readFileSync(process.env.REPORT_FILE, 'utf8');
-            const commentOnPr = require('.github/workflows/commentOnPr.cjs');
-            await commentOnPr(
-              {
-                message: report,
-                identifierMessage: '<!-- DEPENDENT DIFF FILES COMMENT -->',
-              },
-              { github, context }
-            );
-        env:
-          REPORT_FILE: ./dependent-files-with-diff-files.md
+          message-file-path: ./dependent-files-with-diff-files.md
+          identifier-message: '<!-- DEPENDENT DIFF FILES COMMENT -->'
