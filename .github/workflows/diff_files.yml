@@ -7,10 +7,22 @@ jobs:
   diff_files:
     runs-on: ubuntu-22.04
 
+    permissions:
+      contents: read
+      pull-requests: write
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
 
       - name: Diff Files On Pull Request
         id: diff-files-on-pr
@@ -20,10 +32,58 @@ jobs:
         # 失敗しても続けてくれる
         continue-on-error: true
 
-      - name: Show Diff Files Is Exists
+      - name: Show Diff Files If Exists
         run: |
           if [ -f ./diff_files.txt ]; then
             cat ./diff_files.txt
           else
             echo "diff_files.txt is not exists."
           fi
+
+      - name: Dependent Diff Files
+        run: |
+          if [ -f ./diff_files.txt ]; then
+            npx depcruise src --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T text
+          else
+            echo "diff_files.txt is not exists."
+          fi
+
+      - name: Report Dependent Diff Files
+        run: |
+          if [ -f ./diff_files.txt ]; then
+            DEPENDENT_RESULT=$(npx depcruise . --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T mermaid)
+            TRIMMED_RESULT=$(echo $DEPENDENT_RESULT | sed 's/flowchart LR//')
+
+            if [ -z $TRIMMED_RESULT ]; then
+              echo "変更ファイルに依存しているJaveScriptファイルはありません。" >> $REPORT_FILE
+            else
+              echo "変更ファイルに依存しているJaveScriptファイルをグラフに出力しました。" >> $REPORT_FILE
+              echo '```mermaid' >> $REPORT_FILE
+              echo "$DEPENDENT_RESULT" >> $REPORT_FILE
+              echo "" >> $REPORT_FILE
+              echo '```' >> $REPORT_FILE
+            fi
+
+            cat $REPORT_FILE
+          else
+            echo "diff_files.txt is not exists."
+          fi
+        env:
+          REPORT_FILE: ./dependent-files-with-diff-files.md
+
+      - name: Comment Dependent Diff Files
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync(process.env.REPORT_FILE, 'utf8');
+            const commentOnPr = require('.github/workflows/commentOnPr.cjs');
+            await commentOnPr(
+              {
+                message: report,
+                identifierMessage: '<!-- DEPENDENT DIFF FILES COMMENT -->',
+              },
+              { github, context }
+            );
+        env:
+          REPORT_FILE: ./dependent-files-with-diff-files.md
