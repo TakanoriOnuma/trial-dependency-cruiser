@@ -47,7 +47,8 @@ jobs:
       - name: Report Dependent Diff Files
         run: |
           if [ -f ./diff_files.txt ]; then
-            npx depcruise src --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T mermaid
+            npx depcruise src --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T mermaid >> ./dependent-files-with-diff-files.md
+            cat ./dependent-files-with-diff-files.md
           else
             echo "diff_files.txt is not exists."
           fi
