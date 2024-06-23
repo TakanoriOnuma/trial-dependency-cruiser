@@ -47,7 +47,7 @@ jobs:
       - name: Report Dependent Diff Files
         run: |
           if [ -f ./diff_files.txt ]; then
-            echo "```mermaid" > $REPORT_FILE
+            echo "```mermaid" >> $REPORT_FILE
             npx depcruise src --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T mermaid >> $REPORT_FILE
             echo "```" >> $REPORT_FILE
             cat $REPORT_FILE
