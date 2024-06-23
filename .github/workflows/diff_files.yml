@@ -51,7 +51,7 @@ jobs:
       - name: Report Dependent Diff Files
         run: |
           if [ -f ./diff_files.txt ]; then
-            DEPENDENT_RESULT=$(npx depcruise src --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T mermaid)
+            DEPENDENT_RESULT=$(npx depcruise docs --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T mermaid)
             echo $DEPENDENT_RESULT
             TRIMMED_RESULT=$(echo $DEPENDENT_RESULT)
             echo $TRIMMED_RESULT
