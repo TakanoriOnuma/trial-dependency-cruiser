@@ -51,8 +51,8 @@ jobs:
       - name: Report Dependent Diff Files
         run: |
           if [ -f ./diff_files.txt ]; then
+            echo "変更ファイルに依存しているファイルグラフを出力しました。" >> $REPORT_FILE
             echo '```mermaid' >> $REPORT_FILE
-            echo "変更ファイルに依存しているファイルグラフ" >> $REPORT_FILE
             npx depcruise . --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T mermaid >> $REPORT_FILE
             echo "" >> $REPORT_FILE
             echo '```' >> $REPORT_FILE
