@@ -51,11 +51,19 @@ jobs:
       - name: Report Dependent Diff Files
         run: |
           if [ -f ./diff_files.txt ]; then
-            echo "変更ファイルに依存しているファイルグラフを出力しました。" >> $REPORT_FILE
-            echo '```mermaid' >> $REPORT_FILE
-            npx depcruise docs --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T mermaid >> $REPORT_FILE
-            echo "" >> $REPORT_FILE
-            echo '```' >> $REPORT_FILE
+            DEPENDENT_RESULT=$(npx depcruise src --reaches $(cat ./diff_files.txt | xargs | sed 's/ /|/g') -T mermaid)
+            echo $DEPENDENT_RESULT
+            TRIMMED_RESULT=$(echo $DEPENDENT_RESULT)
+            echo $TRIMMED_RESULT
+            if [ -z $TRIMMED_RESULT ]; then
+              echo "変更ファイルに依存しているJaveScriptファイルはありません。" >> $REPORT_FILE
+            else
+              echo "変更ファイルに依存しているJaveScriptファイルをグラフに出力しました。" >> $REPORT_FILE
+              echo '```mermaid' >> $REPORT_FILE
+              echo "$DEPENDENT_RESULT" >> $REPORT_FILE
+              echo "" >> $REPORT_FILE
+              echo '```' >> $REPORT_FILE
+            fi
             cat $REPORT_FILE
           else
             echo "diff_files.txt is not exists."
